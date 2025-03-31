@@ -9,7 +9,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig  {
+public class SecurityConfig {
 
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
@@ -20,16 +20,10 @@ public class SecurityConfig  {
         // 내부 필터 다 커스텀 구현 때문에 기본으로, 이후 다시 설정
         http.oauth2Login((oauth2Login) -> Customizer.withDefaults());
 
-        http
-                .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/", "/oauth2/**", "/login/**").permitAll()
-                        .anyRequest().authenticated()
-                );
-
-
-
-        
-
+        http.authorizeHttpRequests((auth) -> auth
+                .requestMatchers("/", "/oauth2/**", "/login/**").permitAll()
+                .anyRequest().authenticated()
+        );
 
         return http.build();
     }
